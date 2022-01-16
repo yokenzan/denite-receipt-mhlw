@@ -1,0 +1,2 @@
+jaconv==0.3
+pynvim==0.4.3
