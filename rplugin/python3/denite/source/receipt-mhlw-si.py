@@ -1,10 +1,5 @@
-# ============================================================================
-# FILE: source.py
-# AUTHOR: Prabir Shrestha <mail at prabir.me>
-# License: MIT license
-# ============================================================================
-
 from pynvim import Nvim
+import os
 import csv
 
 from denite.base.source import Base
@@ -21,7 +16,9 @@ class Source(Base):
         self.silist = list()
 
     def on_init(self, context: UserContext) -> None:
-        with open('/home/yosuke/wk/repos/denite-receipt-master/csv/s.csv', 'r', encoding='shift_jis') as f:
+        csvpath = os.path.relpath('/'.join([__file__] + ['..'] * 5 + ['csv/s.csv']))
+        print(csvpath)
+        with open(csvpath, 'r', encoding='shift_jis') as f:
             reader      = csv.reader(f)
             self.silist = list(map(
                 lambda si: { 'code': si[2], 'name': si[4], 'kana': si[6] },
@@ -31,7 +28,7 @@ class Source(Base):
     def gather_candidates(self, context: UserContext) -> Candidates:
         return list(map(
             lambda si: {
-                'word': " | ".join([si['code'], si['name'], si['kana'], ]),
+                'word': " | ".join([si['code'], si['name'].ljust(64), si['kana'].ljust(20), ]),
                 'name': si['name'],
                 'code': si['code'],
                 'kana': si['kana'],
