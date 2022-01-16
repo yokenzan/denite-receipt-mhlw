@@ -13,8 +13,6 @@ class Kind(Base):
         self.name = 'receipt-mhlw'
         self.default_action = 'append'
 
-    def action_append(self, context: UserContext) -> None:
-
     def action_yank(self, context: UserContext) -> None:
         self.action_yank_name(context)
 
