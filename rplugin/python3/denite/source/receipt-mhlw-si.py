@@ -16,8 +16,8 @@ class Source(Base):
     def __init__(self, vim: Nvim) -> None:
         super().__init__(vim)
 
-        self.name   = 'receipt-master-si'
-        self.kind   = 'receipt-master'
+        self.name   = 'receipt-mhlw-si'
+        self.kind   = 'receipt-mhlw'
         self.silist = list()
 
     def on_init(self, context: UserContext) -> None:

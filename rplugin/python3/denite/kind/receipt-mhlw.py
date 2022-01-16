@@ -10,7 +10,7 @@ class Kind(Base):
     def __init__(self, vim: Nvim) -> None:
         super().__init__(vim)
 
-        self.name = 'receipt-master'
+        self.name = 'receipt-mhlw'
         self.default_action = 'append'
 
     def action_append(self, context: UserContext) -> None:
