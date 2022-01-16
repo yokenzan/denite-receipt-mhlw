@@ -1,6 +1,7 @@
 from pynvim import Nvim
 import os
 import csv
+import jaconv
 
 from denite.base.source import Base
 from denite.util import UserContext, Candidates
@@ -27,10 +28,17 @@ class Source(Base):
 
     def gather_candidates(self, context: UserContext) -> Candidates:
         return list(map(
-            lambda si: {
-                'word': " | ".join([si['code'], si['name'].ljust(64), si['kana'].ljust(20), ]),
-                'name': si['name'],
-                'code': si['code'],
-                'kana': si['kana'],
-                },
-                self.silist))
+            lambda si: self.generate_candidate(si),
+            self.silist))
+
+    def generate_candidate(self, si):
+        kata   = jaconv.h2z(si['kana'])
+        hira   = jaconv.kata2hira(kata)
+        romaji = jaconv.kata2alphabet(kata).replace('ー', '-')
+        return {
+            'word':   " | ".join([si['code'], si['name'], romaji, hira]),
+            'name':   si['name'],
+            'code':   si['code'],
+            'kana':   hira,
+            'romaji': romaji,
+        }
