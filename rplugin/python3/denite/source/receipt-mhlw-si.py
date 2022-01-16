@@ -8,6 +8,9 @@ from denite.util import UserContext, Candidates
 
 
 class Source(Base):
+    MHLW_SI_CODE = 2
+    MHLW_SI_NAME = 4
+    MHLW_SI_KANA = 6
 
     def __init__(self, vim: Nvim) -> None:
         super().__init__(vim)
@@ -22,7 +25,7 @@ class Source(Base):
         with open(csvpath, 'r', encoding='shift_jis') as f:
             reader      = csv.reader(f)
             self.silist = list(map(
-                lambda si: { 'code': si[2], 'name': si[4], 'kana': si[6] },
+                lambda si: { 'code': si[self.MHLW_SI_CODE], 'name': si[self.MHLW_SI_NAME], 'kana': si[self.MHLW_SI_KANA] },
                     [row for row in reader]
                     ))
 
